@@ -1,6 +1,10 @@
+dependencies:
+  - f5networks.f5_modules
+
 galaxy_info:
+  role_name: f5_loadbalancer
   author: Markus Rainer
-  description: F5 Loadbalancer Role for Demo Labs and Workshops
+  description: F5 Loadbalancer Role for Demo and Labs
   company: Red Hat
 
   license: MIT
@@ -13,7 +17,3 @@ galaxy_info:
         - all
 
   galaxy_tags: [f5, demo, lab, networking]
-
-dependencies: []
-
-  

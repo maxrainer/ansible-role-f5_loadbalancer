@@ -24,7 +24,7 @@
   tags: [always]
 
 - name: add virtual server
-  bigip_virtual_server:
+  f5networks.bigip_virtual_server:
     provider: "{{ f5_provider }}"
     name: "vip"
     destination: "{{ f5_provider.server }}"
