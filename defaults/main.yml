@@ -1,0 +1,18 @@
+---
+# defaults file for f5-bigip
+
+f5_license: 1234-1234-1234-1234
+f5_provider_server_port: 8443
+f5_provider_password: changeme
+# present / absent
+f5_license_state: present
+
+f5_provider:
+  server: "{{ ansible_host }}"
+  user: admin
+  validate_certs: no
+  password: "{{ f5_provider_password }}"
+  server_port: "{{ f5_provider_server_port }}"
+
+f5_facts_subsets:
+  - system-info 

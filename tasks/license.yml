@@ -1,0 +1,17 @@
+---
+
+- name: "set license to be {{ f5_license_state }} on F5 big-ip"
+  f5networks.f5_modules.bigip_device_license: 
+    provider: "{{ f5_provider }}"
+    accept_eula: "yes"
+    state: "{{ f5_license_state }}"
+    license_key: "{{ f5_license }}"
+  notify: save config
+  tags: [always]
+  register: _f5_license_output
+
+- name: debug license
+  debug:
+    msg: "{{ _f5_license_output }}"
+    verbosity: 2
+  tags: [always]

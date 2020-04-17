@@ -1,0 +1,11 @@
+---
+# f5-loadbalancer roles main.yml
+
+- include_tasks: facts.yml 
+  tags: [facts]
+
+- include_tasks: license.yml
+  tags: [license]
+
+- include_tasks: balance.yml 
+  tags: [balance]

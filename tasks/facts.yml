@@ -1,0 +1,16 @@
+---
+
+- name: gather facts
+  f5networks.f5_modules.bigip_device_info:
+    provider: "{{ f5_provider }}"
+    gather_subset: 
+      - system-info 
+      - interfaces
+  register: _f5_facts
+  tags: [always]
+
+- name: facts output 
+  debug: 
+     msg: "{{ _f5_facts }}"
+     verbosity: 2
+  tags: [always]

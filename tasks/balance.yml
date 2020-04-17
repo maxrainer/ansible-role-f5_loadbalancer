@@ -1,0 +1,44 @@
+---
+# balance.yml
+
+- name: www_pool for servers
+  f5networks.f5_modules.bigip_pool: 
+    provider: "{{ f5_provider }}"
+    name: www_pool
+    lb_method: "round-robin"
+    monitors: "/Common/http"
+    monitor_type: "and_list"
+    state: present
+  notify: save config
+  tags: [always]
+
+- name: add pool members
+  f5networks.f5_modules.bigip_pool_member:
+    provider: "{{ f5_provider }}"
+    port: "{{ hostvars[item].f5_webserver_port }}"
+    name: "{{hostvars[item].f5_webserver_name }}"
+    host: "{{hostvars[item].f5_webserver_host }}"
+    pool: www_pool
+  loop: "{{ groups['function_webserver'] }}"
+  notify: save config
+  tags: [always]
+
+- name: add virtual server
+  bigip_virtual_server:
+    provider: "{{ f5_provider }}"
+    name: "vip"
+    destination: "{{ f5_provider.server }}"
+    port: "80"
+    enabled_vlans: "all"
+    all_profiles: ['http']
+    pool: www_pool
+    snat: "Automap"
+  notify: save config
+  register: vservercache
+  tags: [always]
+
+- name: delay after virtual server changed
+  wait_for:
+    timeout: 5
+  when: vservercache.changed
+  tags: [always]
