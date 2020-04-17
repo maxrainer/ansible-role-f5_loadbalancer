@@ -2,6 +2,8 @@
 
 - hosts: localhost
   remote_user: root
+  collections: 
+    - f5networks.f5_modules
   roles:
     - ansible-role-f5_loadbalancer
   

@@ -1,5 +1,4 @@
-dependencies:
-  - f5networks.f5_modules
+dependencies: []
 
 galaxy_info:
   role_name: f5_loadbalancer
