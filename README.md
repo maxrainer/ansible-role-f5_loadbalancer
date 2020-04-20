@@ -1,5 +1,5 @@
 # **Ansible Role for F5 BigIP Demos**
-[![Build Status](https://travis-ci.com/maxrainer/ansible-role-centos_app_server.svg?branch=master)](https://travis-ci.com/maxrainer/ansible-role-centos_app_server)
+[![Build Status](https://travis-ci.com/maxrainer/ansible-role-f5_loadbalancer.svg?branch=master)](https://travis-ci.com/maxrainer/ansible-role-f5_loadbalancer)
 
 ## **Overview**
 Simple examples for providing F5 Workshops, Demos and Labs.
