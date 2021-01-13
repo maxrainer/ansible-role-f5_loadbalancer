@@ -1,16 +1,14 @@
 ---
 # f5-loadbalancer roles main.yml
 
-- name: debug role F5 provider
-  debug:
-    var: f5_provider
-    verbosity: 2
-
 - include_tasks: facts.yml 
   tags: [facts]
 
 - include_tasks: license.yml
   tags: [license]
+
+- include_tasks: postprovision.yml
+  tags: [postprovision, prepare]
 
 - include_tasks: balance.yml 
   tags: [balance]
