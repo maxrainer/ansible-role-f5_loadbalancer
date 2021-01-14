@@ -1,0 +1,12 @@
+---
+
+- name: set state of poolmember
+  f5networks.f5_modules.bigip_pool_member:
+    provider: "{{ f5_provider }}"
+    name: "{{ hostvars[item].f5_webserver_name }}"
+    host: "{{ hostvars[item].f5_webserver_host }}"
+    port: "{{ hostvars[item].f5_webserver_port }}"
+    state: "{{ input_member_state | default('present') }}"
+    pool: "{{ f5_pool | default('www_pool') }}"
+  loop: "{{ input_webservers }}"
+  tags: [always]
