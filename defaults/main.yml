@@ -17,7 +17,7 @@ f5_provider:
 f5_device_info_subset:
   - system-info
 
-f5_web_dir: /opt/reports
+f5_web_dir: /opt/reports/
 
 f5_pools: [www_pool]
 

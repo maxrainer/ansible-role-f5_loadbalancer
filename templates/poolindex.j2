@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+<h2>F5 Pool Index</h2>
+
+<h4>Pools</h4>
+<table>
+    <thead>
+        <tr>
+        <th></th>
+        <th>name</th>
+        <th>active members</th>
+        <th>min. active members</th>
+        <th>total members</th>
+        <th>enable status</th>
+        <th>availability</th>
+        <th>reason</th>
+        <th>total requests</th>
+        </tr>
+    </thead>
+ <tbody>
+  {% for pool in _pools.ansible_facts.ansible_net_ltm_pools %}
+  <tr>
+  {% if pool.availability_status == 'available' %}
+  <td><img src="green.png" alt="{{ pool.availability_status }}" style="width:14px;height:14px;"></td>
+  {% else %}
+  <td><img src="red.png" alt="{{ pool.availability_status }}" style="width:12px;height:12px;"></td>
+  {% endif %}
+  <td><a href="{{ f5_web_dir }}{{ pool.name }}_members.html">{{ pool.name }}</a></td>
+  <td>{{ pool.active_member_count }}</td>
+  <td>{{ pool.minimum_active_members }}</td>
+  <td>{{ pool.member_count }}</td>
+  <td>{{ pool.enabled_status }}</td>
+  <td>{{ pool.availability_status }}</td>
+  <td>{{ pool.status_reason }}</td>
+  <td>{{ pool.total_requests}}</td>
+  </tr>
+  {% endfor %}
+ </tbody>
+</table>
+
+</body>
+</html>

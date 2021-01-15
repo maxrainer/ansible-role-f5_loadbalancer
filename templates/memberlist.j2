@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+<h2>F5 Pool Members for {{ item.name }}</h2>
+
+
+<table>
+    <thead>
+        <tr>
+        <th></th>
+        <th>name</th>
+        <th>address</th>
+        <th>partition</th>
+        <th>state</th>
+        <th>real state</th>
+        </tr>
+    </thead>
+    <tbody>
+      {% for member in item.members %}
+      <tr>
+      <td>
+      {% if member.state == 'present' %}
+      <img src="green.png" alt="{{ member.state }}" style="width:14px;height:14px;">
+      {% else %}
+      <img src="red.png" alt="{{ member.state }}" style="width:12px;height:12px;">      
+      {% endif %}
+      </td>
+      <td>{{ member.name }}</td>
+      <td>{{ member.address }}</td>
+      <td>{{ member.partition }}</td>
+      <td>{{ member.state }}</td>
+      <td>{{ member.real_state }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>
