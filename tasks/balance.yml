@@ -1,15 +1,16 @@
 ---
 # balance.yml
 
-- name: www_pool for servers
+- name: handle pools
   f5networks.f5_modules.bigip_pool: 
     provider: "{{ f5_provider }}"
-    name: www_pool
+    name: "{{ item }}"
     lb_method: "round-robin"
     monitors: "/Common/http"
     monitor_type: "and_list"
     state: present
   notify: save config
+  loop: "{{ f5_pools }}"
   tags: [always]
 
 - name: add pool members
@@ -18,11 +19,14 @@
     port: "{{ hostvars[item].f5_webserver_port }}"
     name: "{{hostvars[item].f5_webserver_name }}"
     host: "{{hostvars[item].f5_webserver_host }}"
-    pool: www_pool
+    pool: "{{hostvars[item].f5_pool_member }}"
   loop: "{{ groups['function_webserver'] }}"
+  when: hostvars[item].f5_pool_member is defined and hostvars[item].f5_pool_member != ""
   notify: save config
   tags: [always]
 
+# only the first virtual server is created
+# this is for demo only
 - name: add virtual server
   f5networks.f5_modules.bigip_virtual_server:
     provider: "{{ f5_provider }}"
@@ -31,7 +35,7 @@
     port: "80"
     enabled_vlans: "all"
     all_profiles: ['http']
-    pool: www_pool
+    pool: "{{ f5_pools[0] }}"
     snat: "Automap"
   notify: save config
   register: vservercache

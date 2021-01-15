@@ -16,3 +16,8 @@ f5_provider:
 
 f5_facts_subsets:
   - system-info 
+
+f5_pools: [www_pool]
+
+input_member_state: enabled
+input_webservers: []
