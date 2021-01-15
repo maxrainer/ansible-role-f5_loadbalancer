@@ -29,7 +29,7 @@
   {% else %}
   <td><img src="red.png" alt="{{ pool.availability_status }}" style="width:12px;height:12px;"></td>
   {% endif %}
-  <td><a href="{{ f5_web_dir }}{{ pool.name }}_members.html">{{ pool.name }}</a></td>
+  <td><a href="{{ pool.name }}_members.html">{{ pool.name }}</a></td>
   <td>{{ pool.active_member_count }}</td>
   <td>{{ pool.minimum_active_members }}</td>
   <td>{{ pool.member_count }}</td>
