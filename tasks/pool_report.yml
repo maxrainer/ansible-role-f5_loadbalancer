@@ -1,0 +1,63 @@
+---
+
+- name: collect data
+  f5networks.f5_modules.bigip_device_info:
+    provider: "{{ f5_provider }}"
+    gather_subset:
+      - ltm-pools
+  register: _pools
+  tags: [always]
+
+- name: debug
+  debug:
+    var: _pools
+  tags: [always]
+
+- name: clean old reports and files
+  file: 
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "{{ f5_web_dir }}poolindex.html"
+    - "{{ f5_web_dir }}main.css"
+    - "{{ f5_web_dir }}red.png"
+    - "{{ f5_web_dir }}green.png"
+  tags: [always]
+
+- name: clean old member reports
+  file: 
+    path: "{{ f5_web_dir }}{{ item.name }}_members.html"
+    state: absent
+  loop: "{{ _pools.ansible_facts.ansible_net_ltm_pools }}"
+  loop_control:
+    label: "{{ item.name }}"
+  tags: [always]
+
+- name: copy static files
+  copy:
+    src: "{{ item}}"
+    dest: "{{ f5_web_dir }}{{item}}"
+  loop:
+    - main.css
+    - red.png
+    - green.png
+  tags: [always]
+
+- name: generate pool report
+  template: 
+    src: poolindex.j2
+    dest: "{{ f5_web_dir }}poolindex.html"
+  delegate_to: localhost
+  run_once: true
+  tags: [always]
+
+- name: generate pool member report 
+  template: 
+    src: memberlist.j2
+    dest: "{{ f5_web_dir }}{{ item.name }}_members.html"
+  delegate_to: localhost
+  run_once: true
+  loop: "{{ _pools.ansible_facts.ansible_net_ltm_pools }}"
+  loop_control:
+    label: "{{ item.name }}"
+  tags: [always]

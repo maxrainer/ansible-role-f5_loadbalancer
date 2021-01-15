@@ -14,8 +14,10 @@ f5_provider:
   password: "{{ f5_provider_password }}"
   server_port: "{{ f5_provider_server_port }}"
 
-f5_facts_subsets:
-  - system-info 
+f5_device_info_subset:
+  - system-info
+
+f5_web_dir: /opt/reports
 
 f5_pools: [www_pool]
 
