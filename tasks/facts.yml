@@ -3,9 +3,7 @@
 - name: gather facts
   f5networks.f5_modules.bigip_device_info:
     provider: "{{ f5_provider }}"
-    gather_subset: 
-      - system-info 
-      - interfaces
+    gather_subset: "{{ f5_device_info_subset }}"
   register: _f5_facts
   tags: [always]
 
