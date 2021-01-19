@@ -18,10 +18,8 @@ f5_device_info_subset:
   - system-info
 
 f5_reverse_dest: tower
-f5_reverse_tower_inventory: reverse
 
 f5_web_dir: /tmp/
-
 f5_pools: [www_pool1, www_pool2]
 
 input_member_state: enabled
