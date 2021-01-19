@@ -20,8 +20,9 @@
       tower_username: "{{ f5_tower_username }}"
       tower_password: "{{ f5_tower_password }}"
       validate_certs: no
-      name: "{{ f5_reverse_tower_inventory }}"
+      name: "{{ f5_tower_inventory }}"
       description: managed by Ansible F5 role only
+      organization: Default
 
   - name: push back to Ansible Tower
     include_tasks:
