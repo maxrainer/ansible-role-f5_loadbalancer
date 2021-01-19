@@ -18,3 +18,9 @@
 
 - include_tasks: pool_report.yml
   tags: [report]
+
+- include_tasks: 
+    file: reverseengineer.yml
+    apply: 
+      tags: always
+  tags: [reverse]
