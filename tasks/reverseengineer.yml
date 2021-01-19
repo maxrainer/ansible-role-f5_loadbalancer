@@ -12,11 +12,22 @@
     var: _device_info.ansible_facts.ansible_net_ltm_pools
     verbosity: 2
 
-- name: push back to Ansible Tower
-  include_tasks:
-    file: reverseengineer_inner.yml
-  loop: "{{ _device_info.ansible_facts.ansible_net_ltm_pools }}"
-  loop_control:
-    loop_var: pool
-    label: "{{ pool.name }}"
+- name: Ansible Tower push back block
+  block:
+  - name: make sure about inventory itself on Tower
+    awx.awx.tower_inventory:
+      tower_host: "{{ f5_tower_host }}"
+      tower_username: "{{ f5_tower_username }}"
+      tower_password: "{{ f5_tower_password }}"
+      validate_certs: no
+      name: "{{ f5_reverse_tower_inventory }}"
+      description: managed by Ansible F5 role only
+
+  - name: push back to Ansible Tower
+    include_tasks:
+      file: reverseengineer_inner.yml
+    loop: "{{ _device_info.ansible_facts.ansible_net_ltm_pools }}"
+    loop_control:
+      loop_var: pool
+      label: "{{ pool.name }}"
   when: f5_reverse_dest == 'tower'
