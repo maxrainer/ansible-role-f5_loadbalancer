@@ -1,0 +1,22 @@
+---
+# learn from F5 and push back to selectable destinations
+
+- name: grep data from F5 device
+  f5networks.f5_modules.bigip_device_info:
+    provider: "{{ f5_provider }}"
+    gather_subset:
+      - ltm-pools
+  register: _device_info
+
+- debug: 
+    var: _device_info.ansible_facts.ansible_net_ltm_pools
+    verbosity: 2
+
+- name: push back to Ansible Tower
+  include_tasks:
+    file: reverseengineer_inner.yml
+  loop: "{{ _device_info.ansible_facts.ansible_net_ltm_pools }}"
+  loop_control:
+    loop_var: pool
+    label: "{{ pool.name }}"
+  when: f5_reverse_dest == 'tower'

@@ -1,0 +1,37 @@
+---
+# inner members loop
+
+- name: block for Ansible Tower push back
+  block:
+  - name: write inventory hosts
+    awx.awx.tower_host:
+      tower_host: "{{ f5_tower_host }}"
+      tower_username: "{{ f5_tower_username }}"
+      tower_password: "{{ f5_tower_password }}"
+      validate_certs: no
+      name: "{{ member.name | regex_replace(':[0-9]*') }}"
+      inventory: "{{ f5_tower_inventory }}"
+      variables:
+        hostname: "{{ member.name | regex_replace(':[0-9]*') }}"
+        private_ip: "{{ member.address }}"
+        partition: "{{ member.partition }}"
+        f5_pool_member: "{{ pool.name }}"
+    when: f5_reverse_dest == 'tower' and pool.members is defined 
+    loop: "{{ pool.members }}"
+    loop_control:
+      loop_var: member
+      label: "{{ member.name | regex_replace(':[0-9]*') }}"
+  - name: extract the member list 
+    set_fact:
+      pm: "{{ pm + [item] }}"
+    loop: "{{ pool | json_query('members[*].name') | regex_replace(':[0-9]*') }}"
+  - name: write inventory groups
+    awx.awx.tower_group:
+      tower_host: "{{ f5_tower_host }}"
+      tower_username: "{{ f5_tower_username }}"
+      tower_password: "{{ f5_tower_password }}"
+      validate_certs: no
+      name: "{{ pool.name }}"
+      inventory: "{{ f5_tower_inventory }}"
+      hosts: "{{ pm }}"
+  when: f5_reverse_dest == 'tower'

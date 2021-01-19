@@ -17,9 +17,18 @@ f5_provider:
 f5_device_info_subset:
   - system-info
 
-f5_web_dir: /opt/reports/
+f5_reverse_dest: tower
 
-f5_pools: [www_pool]
+f5_web_dir: /tmp/
+
+f5_pools: [www_pool1, www_pool2]
 
 input_member_state: enabled
 input_webservers: []
+
+f5_tower_username: admin
+f5_tower_password: Rfc1918!
+f5_tower_host: https://172.16.1.9
+f5_tower_inventory: reverse
+
+pm: []

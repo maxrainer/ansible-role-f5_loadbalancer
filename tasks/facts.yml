@@ -7,8 +7,7 @@
   register: _f5_facts
   tags: [always]
 
-- name: facts output 
+- name: Device Info output
   debug: 
      msg: "{{ _f5_facts }}"
-     verbosity: 2
   tags: [always]
