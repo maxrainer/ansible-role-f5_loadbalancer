@@ -25,7 +25,7 @@
     set_fact:
       pm: "{{ pm + [item] }}"
     loop: "{{ pool | json_query('members[*].name') | regex_replace(':[0-9]*') }}"
-  - name: write inventory groups
+  - name: "write inventory group {{ pool.name }}"
     awx.awx.tower_group:
       tower_host: "{{ f5_tower_host }}"
       tower_username: "{{ f5_tower_username }}"

@@ -1,5 +1,8 @@
 dependencies: []
 
+collections: 
+  - f5networks.f5_modules
+
 galaxy_info:
   role_name: f5_loadbalancer
   author: Markus Rainer
