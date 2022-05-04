@@ -1,7 +1,7 @@
 ---
 
 - name: "set license to be {{ f5_license_state }} on F5 big-ip"
-  bigip_device_license: 
+  f5networks.f5_modules.bigip_device_license: 
     provider: "{{ f5_provider }}"
     accept_eula: "yes"
     state: "{{ f5_license_state }}"

@@ -1,6 +1,6 @@
 ---
 
 - name: save config
-  bigip_config:
+  f5networks.f5_modules.bigip_config:
     provider: "{{ f5_provider }}"
     save: yes

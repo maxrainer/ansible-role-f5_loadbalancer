@@ -1,7 +1,7 @@
 ---
 
 - name: set F5 admin password
-  bigip_command:
+  f5networks.f5_modules.bigip_command:
     provider:
       user: admin
       ssh_keyfile: "{{ aws_pem_key | default(omit) }}"
@@ -16,7 +16,7 @@
   register: _f5_password
 
 - name: save F5 sys config 
-  bigip_command:
+  f5networks.f5_modules.bigip_command:
     provider:
       user: admin
       ssh_keyfile: "{{ aws_pem_key }}"
