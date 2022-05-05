@@ -23,6 +23,7 @@
     - "{{ f5_web_dir }}red.png"
     - "{{ f5_web_dir }}green.png"
   delegate_to: "{{ f5_webserver }}"
+  become: true
   tags: [always]
 
 - name: clean old member reports
@@ -33,6 +34,7 @@
   loop_control:
     label: "{{ item.name }}"
   delegate_to: "{{ f5_webserver }}"
+  become: true
   tags: [always]
 
 - name: copy static files
@@ -44,6 +46,7 @@
     - red.png
     - green.png
   delegate_to: "{{ f5_webserver }}"
+  become: true
   tags: [always]
 
 - name: generate pool report
@@ -52,6 +55,7 @@
     dest: "{{ f5_web_dir }}poolindex.html"
   run_once: true
   delegate_to: "{{ f5_webserver }}"
+  become: true
   tags: [always]
 
 - name: generate pool member report 
@@ -63,4 +67,5 @@
   loop_control:
     label: "{{ item.name }}"
   delegate_to: "{{ f5_webserver }}"
+  become: true
   tags: [always]
