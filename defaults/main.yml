@@ -30,4 +30,6 @@ f5_tower_password: changme
 f5_tower_host: https://127.0.0.1
 f5_tower_inventory: reverse
 
+f5_webserver: localhost
+
 pm: []

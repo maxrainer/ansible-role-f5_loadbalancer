@@ -22,6 +22,7 @@
     - "{{ f5_web_dir }}main.css"
     - "{{ f5_web_dir }}red.png"
     - "{{ f5_web_dir }}green.png"
+  delegate_to: "{{ f5_webserver }}"
   tags: [always]
 
 - name: clean old member reports
@@ -31,6 +32,7 @@
   loop: "{{ _pools.ansible_facts.ansible_net_ltm_pools }}"
   loop_control:
     label: "{{ item.name }}"
+  delegate_to: "{{ f5_webserver }}"
   tags: [always]
 
 - name: copy static files
@@ -41,23 +43,24 @@
     - main.css
     - red.png
     - green.png
+  delegate_to: "{{ f5_webserver }}"
   tags: [always]
 
 - name: generate pool report
   template: 
     src: poolindex.j2
     dest: "{{ f5_web_dir }}poolindex.html"
-  delegate_to: localhost
   run_once: true
+  delegate_to: "{{ f5_webserver }}"
   tags: [always]
 
 - name: generate pool member report 
   template: 
     src: memberlist.j2
     dest: "{{ f5_web_dir }}{{ item.name }}_members.html"
-  delegate_to: localhost
   run_once: true
   loop: "{{ _pools.ansible_facts.ansible_net_ltm_pools }}"
   loop_control:
     label: "{{ item.name }}"
+  delegate_to: "{{ f5_webserver }}"
   tags: [always]
