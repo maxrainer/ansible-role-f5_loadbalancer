@@ -6,11 +6,13 @@
     gather_subset:
       - ltm-pools
   register: _pools
+  delegate_to: localhost
   tags: [always]
 
 - name: debug
   debug:
     var: _pools
+  delegate_to: localhost
   tags: [always]
 
 - name: clean old reports and files
